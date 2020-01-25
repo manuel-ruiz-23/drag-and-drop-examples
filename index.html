@@ -1,0 +1,66 @@
+<script>
+    function dragstart_handler(ev) {
+        console.log('event', ev.target);
+        // Add the target element's id to the data transfer object
+        ev.dataTransfer.setData("text/plain", ev.target.innerText);
+        // you can add multiple data fields
+        ev.dataTransfer.setData("text/html", ev.target);
+
+        /* 
+            Define the drag image
+
+            By default, the browser supplies an image that appears 
+            beside the pointer during a drag operation. 
+            However, an application may define a custom image with 
+            the setDragImage() method, as shown in the following example.
+        */
+        // Create an image and then use it for the drag image.
+        var img = new Image(); 
+        img.src = 'car.png'; 
+        ev.dataTransfer.setDragImage(img, 5, 5);
+    }
+    function dragover_handler(ev) {
+     ev.preventDefault();
+     ev.dataTransfer.dropEffect = "move";
+    }
+    function drop_handler(ev) {
+     ev.preventDefault();
+     alert('no me tires aqui!')
+     // Get the id of the target and add the moved element to the target's DOM
+    //  var data = ev.dataTransfer.getData("text/plain");
+    //  ev.target.appendChild(document.getElementById(data));
+    }
+</script>
+    
+<p 
+    id="p1" 
+    draggable="true" 
+    ondragstart="dragstart_handler(event)">
+    This element is draggable.
+</p>
+
+<div 
+    id="trash-can" 
+    ondrop="drop_handler(event)" 
+    ondragover="dragover_handler(event)"
+>
+</div>
+
+<p draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')">
+    This text <strong>may</strong> be dragged.
+</p>
+
+<style>
+    #trash-can{
+        height: 250px;
+        width: 500px;
+        border: 2px solid;
+    }
+
+    #trash-can::before {
+        content: 'antes de mi';
+        background: red;
+        height: 100%;
+        width: 100%;
+    }
+</style>

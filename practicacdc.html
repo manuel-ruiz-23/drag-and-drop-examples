@@ -1,0 +1,33 @@
+<script>
+    function comenzarArrastre(ev) {
+        console.log('me estas moviendo');
+        console.log('event', ev.target);
+        // Add the target element's id to the data transfer object
+        ev.dataTransfer.setData("text/plain", ev.target.innerText);
+        // you can add multiple data fields
+        ev.dataTransfer.setData("text/html", ev.target);
+    }
+    function configuracion(ev) {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move";
+    }
+    function agradecer() {
+        alert('gracias por llevarme a mi casa');
+    }
+</script>
+
+<body>
+    <p
+        id="elemento"
+        draggable="true"
+        ondragstart="comenzarArrastre(event)">
+        perrito
+    </p>
+    <div 
+        id="casa"
+        ondrop="agradecer(event)"
+        ondragover="configuracion(event)"
+        style="width: 250px; height: 250px; border: 1px solid;"
+    >
+    </div>
+</body>
